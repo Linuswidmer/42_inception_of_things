@@ -1,0 +1,20 @@
+{
+    "name": "Ubuntu",
+    
+    "image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu",
+
+    "customizations": {
+        "vscode": {
+            "extensions": ["GitHub.copilot"]
+        }
+
+    },
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && echo deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main | sudo tee /etc/apt/sources.list.d/hashicorp.list && sudo apt update && sudo apt install -y vagrant virtualbox",
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode"
+}
