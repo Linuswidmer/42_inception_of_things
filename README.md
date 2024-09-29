@@ -6,3 +6,8 @@ This project is supposed to be run inside a Debian/Ubuntu VM. To properly set it
 chmod +x ./config/init.sh
 sudo ./config/init.sh
 ```
+To check that the installation is complete
+```bash
+vagrant --version
+VBoxManage --version
+```
