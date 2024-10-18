@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script installs Vagrant and VirtualBox in an Ubuntu/Debian based UNIX env
+# Launch with sudo rights
+
 DISTRO="jammy"
 
 # Installing Vagrant 

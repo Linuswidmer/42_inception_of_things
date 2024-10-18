@@ -18,11 +18,11 @@ Vagrant.configure("2") do |config|
 	  control.vm.hostname = "lwidmerSW"  # Correctly scoped to "lwidmerSW"
 	  control.vm.network "public_network", ip: "192.168.56.111"
 
-	   # Resource allocation for lwidmerSW
-	   control.vm.provider "virtualbox" do |vb|
+	  # Resource allocation for lwidmerSW
+	  control.vm.provider "virtualbox" do |vb|
 		vb.memory = "512"   # Set memory to 512 MB (change to 1024 if needed)
 		vb.cpus = 1         # Set to 1 CPU
 	  end
 	end
-  end
+end
   
