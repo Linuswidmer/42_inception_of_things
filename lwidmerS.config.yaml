@@ -1,0 +1,5 @@
+# /etc/rancher/k3s/config.yaml
+node-ip: "192.168.56.110"  # Master node IP address
+node-external-ip: "192.168.56.110"  # Public IP address if needed
+write-kubeconfig-mode: "644"
+token: "your-secret-token"  # Same token must be used on all nodes
