@@ -1,48 +1,45 @@
 Vagrant.configure("2") do |config|
 	config.vm.box = "hashicorp/bionic64"
   
-	# Define the first VM (lwidmerS)
 	config.vm.define "lwidmerS" do |server|
 	  server.vm.box = "debian/bookworm64"
 	  server.vm.hostname = "lwidmerS"
 	  server.vm.network "private_network", ip: "192.168.56.110"
 	  server.vm.synced_folder "./token", "/token"
   
-	  # Resource allocation for lwidmerS
 	  server.vm.provider "virtualbox" do |vb|
-		vb.memory = "1024"   # Set memory to 1024 MB
-		vb.cpus = 1          # Set to 1 CPU
+		vb.memory = "1024"
+		vb.cpus = 1
 	  end
   
-	  # Installing K3s
 	  server.vm.provision "shell", inline: <<-SHELL
-	  	apt-get update && apt-get upgrade && apt-get install -y curl
+	    sudo apt-get update 
+		sudo apt-get upgrade
+		sudo apt-get install -y curl net-tools
 		curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip=192.168.56.110" sh -
-		# Save the K3S token to a shared folder before trying to install the worker
 		sudo cat /var/lib/rancher/k3s/server/node-token > /token/node-token
 	  SHELL
 	end
   
-	# Define the second VM (lwidmerSW)
 	config.vm.define "lwidmerSW" do |worker|
 	  worker.vm.box = "debian/bookworm64"
 	  worker.vm.hostname = "lwidmerSW"
 	  worker.vm.network "private_network", ip: "192.168.56.111" 
 	  worker.vm.synced_folder "./token", "/token"
 	  
-	  # Resource allocation for lwidmerSW
 	  worker.vm.provider "virtualbox" do |vb|
 		vb.memory = "1024"
 		vb.cpus = 1
 	  end
   
-	  # Installing worker nodesudo k3s kubectl get nodes -o wide
 	  worker.vm.provision "shell", inline: <<-SHELL
 		while [ ! -f /token/node-token ]; do
 		  echo "Waiting for K3S token..."
 		  sleep 5
 		done
-		apt-get update && apt-get upgrade && apt-get install -y curl
+		sudo apt-get update 
+		sudo apt-get upgrade
+		sudo apt-get install -y curl net-tools
 		curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip=192.168.56.111" K3S_URL=https://192.168.56.110:6443 K3S_TOKEN=`cat /token/node-token` sh -
 	  SHELL
 	end
