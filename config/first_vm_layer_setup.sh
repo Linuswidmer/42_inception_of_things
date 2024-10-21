@@ -14,3 +14,6 @@ apt-get update && apt-get upgrade && apt-get install -y vagrant
 wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc | gpg --yes --output /usr/share/keyrings/oracle-virtualbox-2016.gpg --dearmor
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] https://download.virtualbox.org/virtualbox/debian $DISTRO contrib" | tee /etc/apt/sources.list.d/virtualbox.list
 apt-get update && apt-get upgrade && apt-get install -y virtualbox
+
+# Installing package to enable vagrant sybnc file 
+apt-get update && apt-get upgrade && apt-get install -y vagrant-vbguest

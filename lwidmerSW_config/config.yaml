@@ -1,4 +1,4 @@
 # /etc/rancher/k3s/config.yaml
-server: "https://192.168.56.110:6443"  # Master node IP address
-node-ip: "192.168.56.110"  # Worker node IP address
-token: "your-secret-token"  # Same token from the master node
+server: "https://192.168.56.110:6443"
+node-ip: "192.168.56.110"
+token: $(cat /etc/rancher/k3s/token/token.txt)
