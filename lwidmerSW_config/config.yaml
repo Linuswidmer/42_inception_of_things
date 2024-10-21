@@ -1,4 +1,0 @@
-# /etc/rancher/k3s/config.yaml
-server: "https://192.168.56.110:6443"
-node-ip: "192.168.56.110"
-token: $(cat /etc/rancher/k3s/token/token.txt)

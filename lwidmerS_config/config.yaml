@@ -1,4 +1,0 @@
-# /etc/rancher/k3s/config.yaml
-node-ip: "192.168.56.110"
-write-kubeconfig-mode: "644"
-token: $(cat /etc/rancher/k3s/token/token.txt)
