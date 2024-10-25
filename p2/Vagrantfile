@@ -26,9 +26,15 @@ Vagrant.configure("2") do |config|
 		sudo apt-get update
 		sudo apt-get install -y kubectl
 		sudo chown -R $USER /etc/rancher/
-		kubectl create -f /config/app1-pod.yaml
-		kubectl create -f /config/app2-pod.yaml
-		kubectl create -f /config/app3-pod.yaml
+		# Wait for K3s to be ready
+		echo "Waiting for K3s to be fully ready..."
+		sleep 30 # Wait 30 seconds or more if needed
+	  	#kubectl create -f /config/app1-replicaset.yaml
+		kubectl apply -f /config/app1-deployment.yaml
+		#kubectl create -f /config/app2-replicaset.yaml
+		kubectl apply -f /config/app2-deployment.yaml
+		#kubectl create -f /config/app3-replicaset.yaml
+		kubectl apply -f /config/app3-deployment.yaml
 	  SHELL
 	end
 end
