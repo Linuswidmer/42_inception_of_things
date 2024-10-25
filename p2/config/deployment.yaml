@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1
+  name: app-one
   labels:
     app: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: app-one
   template:
     metadata:
       labels:
-        app: nginx
+        app: app-one
     spec:
       containers:
       - name: nginx
@@ -21,22 +21,23 @@ spec:
         ports:
         - containerPort: 80
 
+---
 # app2
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app2
+  name: app-two
   labels:
     app: nginx
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nginx
+      app: app-two
   template:
     metadata:
       labels:
-        app: nginx
+        app: app-two
     spec:
       containers:
       - name: nginx
@@ -44,22 +45,23 @@ spec:
         ports:
         - containerPort: 80
 
+---
 # app3
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app3
+  name: app-three
   labels:
     app: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: app-three
   template:
     metadata:
       labels:
-        app: nginx
+        app: app-three
     spec:
       containers:
       - name: nginx

@@ -25,16 +25,14 @@ Vagrant.configure("2") do |config|
 		sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work correctly
 		sudo apt-get update
 		sudo apt-get install -y kubectl
-		sudo chown -R $USER /etc/rancher/
-		# Wait for K3s to be ready
-		echo "Waiting for K3s to be fully ready..."
-		sleep 30 # Wait 30 seconds or more if needed
-	  	#kubectl create -f /config/app1-replicaset.yaml
-		kubectl apply -f /config/app1-deployment.yaml
-		#kubectl create -f /config/app2-replicaset.yaml
-		kubectl apply -f /config/app2-deployment.yaml
-		#kubectl create -f /config/app3-replicaset.yaml
-		kubectl apply -f /config/app3-deployment.yaml
+    	while ! kubectl get nodes; do
+    	    echo "K3s is not ready yet. Waiting..."
+    	    sleep 5 # Check every 5 seconds
+		done
+		kubectl apply -f /config/deployment.yaml
+		kubectl apply -f /config/ingress.yaml
+		kubectl apply -f /config/services.yaml
+		sudo chown -R vagrant /etc/rancher/
 	  SHELL
 	end
 end
