@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: app2-replicaset
+  name: app-two
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: app2
+      app: app-two
   template:
     metadata:
       labels:
-        app: app2
+        app: app-two
     spec:
       containers:
-      - name: app2-container
+      - name: app-two-container
         image: nginx:stable-alpine
         ports:
         - containerPort: 80
