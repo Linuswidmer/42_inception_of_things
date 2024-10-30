@@ -27,3 +27,7 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work correctly
 sudo apt-get update
 sudo apt-get install -y kubectl
+
+
+# Installing k3d
+curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
