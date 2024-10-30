@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  playground_v1:
+    image: wil42/playground:v1
+    ports:
+      - "8888:8888" # Mapping host port 8889 to container port 8888 for v1
+    environment:
+      - PORT=8888
+    restart: unless-stopped
