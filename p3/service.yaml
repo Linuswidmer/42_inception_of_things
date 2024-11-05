@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dev-app-service
+  namespace: dev
 spec:
   type: NodePort # Change to NodePort or LoadBalancer if you need external access
   selector:
@@ -9,3 +10,5 @@ spec:
   ports:
     - port: 8888
       targetPort: 8888
+      nodePort: 30088  # NodePort to access the service externally (example: 30088)
+
