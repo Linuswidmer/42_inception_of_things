@@ -150,4 +150,5 @@ sudo kubectl set image deployment/wil-playground wil-playground=wil42/playground
 # Optional: Sync the application immediately
 argocd app sync dev-app
 
+sudo kubectl port-forward svc/wil-playground 8888:8888 -n dev
 
