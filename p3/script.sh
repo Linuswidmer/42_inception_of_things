@@ -121,7 +121,7 @@ echo "Port forwarding Argo CD server to localhost:8080..."
 sudo kubectl port-forward svc/argocd-server -n argocd 8080:443 &
 
 # Give the port-forward command a moment to start
-sleep 5
+sleep 20
 
 # Login to Argo CD 
 echo "Logging in to Argo CD..."
@@ -135,20 +135,21 @@ sudo kubectl apply -f application.yaml
 #echo "Creating Argo CD application..."
 #sudo argocd app create dev-app --path wil --sync-policy auto --dest-server https://kubernetes.default.svc --repo https://github.com/mdarbois/Iot_mdarbois_argoCD --dest-namespace dev
 
-echo "Argo CD setup complete. Access the Argo CD UI at http://localhost:8080"
-
 # Get the initial admin password
 #PASSWORD=$(kubectl get secret argocd-secret -n argocd -o jsonpath='{.data.admin\.password}' | base64 -d)
 
 # Login to Argo CD with localhost IP
 #argocd login localhost:30500 --username admin --password "${PASSWORD}" --insecure
-
+sleep 20
 
 # Change the image to v2
 sudo kubectl set image deployment/wil-playground wil-playground=wil42/playground:v2 -n dev
 
 # Optional: Sync the application immediately
-argocd app sync dev-app
+sudo argocd app sync wil-playground
 
-sudo kubectl port-forward svc/wil-playground 8888:8888 -n dev
+sudo kubectl port-forward svc/wil-playground 8888:8888 -n dev\
 
+sleep 20
+
+sudo argocd app sync wil-playground
