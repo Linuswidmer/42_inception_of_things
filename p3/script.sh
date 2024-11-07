@@ -144,6 +144,10 @@ echo "Argo CD setup complete. Access the Argo CD UI at http://localhost:8080"
 #argocd login localhost:30500 --username admin --password "${PASSWORD}" --insecure
 
 
+# Change the image to v2
+sudo kubectl set image deployment/wil-playground wil-playground=wil42/playground:v2 -n dev
+
 # Optional: Sync the application immediately
-#argocd app sync dev-app
+argocd app sync dev-app
+
 
