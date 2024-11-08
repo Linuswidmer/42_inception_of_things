@@ -37,4 +37,3 @@ sleep 5
 # Port forward the Argo CD server
 # echo "Port forwarding Argo CD server to localhost:8080..."
 sudo kubectl port-forward svc/argocd-server -n argocd 8080:443 &
-# sudo kubectl -n argocd port-forward svc/argocd-server 8080:80 &

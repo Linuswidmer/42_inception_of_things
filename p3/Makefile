@@ -9,3 +9,5 @@ launch:
 clean:
 	sudo k3d cluster delete --all
 	docker system prune -a -f
+
+re: clean launch
