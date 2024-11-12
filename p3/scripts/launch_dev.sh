@@ -10,7 +10,7 @@ argocd login localhost:8080 --username admin --password "$ARGOCD_PASSWORD" --ins
 sudo argocd app sync wil-playground --server localhost:8080 --insecure
 
 echo "Applying the application.yaml file..."
-sudo kubectl apply -f application.yaml
+sudo kubectl apply -f ./config/application.yaml
 
 echo "Pod is ready. Updating image..."echo "Waiting for pod to be in Running state..."
 while [[ $(sudo kubectl get pods -n dev -l app=wil-playground -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
@@ -23,12 +23,25 @@ echo "Pod is ready. Updating image..."
 # Change the image to v2
 sudo kubectl set image deployment/wil-playground wil-playground=wil42/playground:v2 -n dev
 
-sudo argocd app sync wil-playground
+# Start a background job that will continuously forward the port
+echo "Starting port-forward for localhost:8888..."
+(
+  while true; do
+    # Kill any process using port 8888 to free it up
+    sudo fuser -k 8888/tcp
+    
+    # Start the port-forwarding
+    sudo kubectl port-forward svc/wil-playground 8888:8888 -n dev
+    echo "Port-forwarding stopped. Restarting..."
 
-#if sudo lsof -i :8888; then
-#  echo "Port 8888 is in use. Killing the process..."
-#  sudo fuser -k 8888/tcp
-#fi
+    # Wait briefly before restarting the port-forward to avoid a tight loop
+    sleep 2
+  done
+) &
 
-sudo fuser -k 8888/tcp
-sudo kubectl port-forward svc/wil-playground 8888:8888 -n dev &
+# Final sync of the application to apply any pending changes
+sudo argocd app sync wil-playground --server localhost:8080 --insecure
+echo "Final sync completed. Port-forward should be active on localhost:8888."
+
+# Keep the script running so the port-forward loop remains active
+wait
